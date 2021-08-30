@@ -1,0 +1,1 @@
+# Magic Constant Class for Python.
