@@ -3,6 +3,7 @@ from typing import Callable, Final, Type
 from .base_class import BaseConstant
 from .utils.letter_case import LetterCaseMatch
 
+__doc__ = 'py_constant_class Lib! -> A new Magic way to use constants with classes.'
 __author__ = 'tallerasaf'
 __all__ = []
 
@@ -42,23 +43,4 @@ class CamelConstant(BaseConstant):
 class MixedConstant(BaseConstant):
     __letter_case_match_func__: Final[Callable[[str], bool]] = LetterCaseMatch.MIXED
     __strict_final__: Final[bool] = False
-
-
-"""
---> Python Cases
-screaming_snake_case -> LONG_FUNCTION_NAME -> for Constants.
-snake_case -> long_function_name -> Variable, Function, Method, Module, Package names.
-pascal_case -> LongFunctionName -> Class names.
-camel_case -> longFunctionName.
-all_upper_case -> LONGFUNCTIONNAME.
-all_lower_case -> longfunctionname.
-kebab_case -> long-function-name.
-screaming_kebab_case -> LONG-FUNCTION-NAME.
-dot_case -> long.function.name.
-screaming_dot_case -> LONG.FUNCTION.NAME.
-mixed_case -> LonG.FUNC_TIO-N.NAmE.
-
-https://plugins.jetbrains.com/plugin/2162-string-manipulation
-https://realpython.com/python-pep8/#naming-styles
-https://www.python.org/dev/peps/pep-0008/#id36
-"""
+    __strict_immutable__: Final[bool] = False

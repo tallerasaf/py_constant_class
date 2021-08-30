@@ -1,6 +1,7 @@
 from typing import Any, Callable, Dict, List, Optional, Tuple, Type, final
 
 from constant_class.meta_class import MetaConstant
+from constant_class.utils.property_util import classproperty
 
 
 class BaseConstant(metaclass=MetaConstant):
@@ -12,11 +13,12 @@ class BaseConstant(metaclass=MetaConstant):
     __error_msg__: str
     __strict_type__: Type = object
     __strict_final__: bool = True
+    __strict_immutable__: bool = True
 
     @classmethod
     @final
     def has_value(cls, value: object) -> bool:
-        return value in list(cls.values())
+        return value in list(cls.values)
 
     @classmethod
     @final
@@ -31,23 +33,23 @@ class BaseConstant(metaclass=MetaConstant):
         except KeyError:
             return default
 
-    @classmethod
+    @classproperty
     @final
-    def to_dict(cls) -> Dict[str, object]:
+    def to_dict(cls) -> Dict[str, object]:  # noqa
         return cls.__constants__
 
-    @classmethod
+    @classproperty
     @final
-    def items(cls) -> List[Tuple[str, Any]]:
+    def items(cls) -> List[Tuple[str, Any]]:  # noqa
         # noinspection PyTypeChecker
         return list(cls.__constants__.items())
 
-    @classmethod
+    @classproperty
     @final
-    def keys(cls) -> List[str]:
+    def keys(cls) -> List[str]:  # noqa
         return list(cls.__constants__.keys())
 
-    @classmethod
+    @classproperty
     @final
-    def values(cls) -> List[object]:
+    def values(cls) -> List[object]:  # noqa
         return list(cls.__constants__.values())

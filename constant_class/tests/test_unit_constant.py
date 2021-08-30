@@ -31,8 +31,32 @@ class ConstantUnitTests(TestCase):
         self.assertEqual(str(Bar), 'Bar(TOR=tor1, bla=2)')
 
     def test_items(self):
-        self.assertEqual(Foo.items(), [('BAR', 'bar1'), ('ABA', 'ABA2')])
-        self.assertEqual(Bar.items(), [('TOR', 'tor1'), ('bla', 2)])
+        self.assertEqual(Foo.items, [('BAR', 'bar1'), ('ABA', 'ABA2')])
+        self.assertEqual(Bar.items, [('TOR', 'tor1'), ('bla', 2)])
+
+    def test_values(self):
+        self.assertEqual(Foo.values, ['bar1', 'ABA2'])
+        self.assertEqual(Bar.values, ['tor1', 2])
+
+    def test_keys(self):
+        self.assertEqual(Foo.keys, ['BAR', 'ABA'])
+        self.assertEqual(Bar.keys, ['TOR', 'bla'])
+
+    def test_to_dict(self):
+        self.assertEqual(Foo.to_dict, {'BAR': 'bar1', 'ABA': 'ABA2'})
+        self.assertEqual(Bar.to_dict, {'TOR': 'tor1', 'bla': 2})
+
+    def test_get(self):
+        self.assertEqual(Foo.get('BAR'), 'bar1')
+        self.assertEqual(Bar.get('TOR'), 'tor1')
+
+    def test_has_key(self):
+        self.assertTrue(Foo.has_key('BAR'))  # noqa
+        self.assertTrue(Bar.has_key('TOR'))  # noqa
+
+    def test_has_value(self):
+        self.assertTrue(Foo.has_value('bar1'))
+        self.assertTrue(Bar.has_value('tor1'))
 
     def test_len(self):
         self.assertEqual(len(Foo), 2)
@@ -41,6 +65,14 @@ class ConstantUnitTests(TestCase):
     def test_contains(self):
         self.assertIn('BAR', Foo)
         self.assertIn('TOR', Bar)
+
+    def test_getitem(self):
+        self.assertEqual(Foo['BAR'], 'bar1')
+        self.assertEqual(Bar['TOR'], 'tor1')
+
+    def test_iter(self):
+        self.assertListEqual([c for c in Foo], ['BAR', 'ABA'])
+        self.assertListEqual([c for c in Bar], ['TOR', 'bla'])
 
     def test_no_members(self):
         with self.assertRaises(AssertionError):
@@ -81,3 +113,14 @@ class ConstantUnitTests(TestCase):
             class Dog(StrConstant):
                 OOF: Final = 'foo'
                 BAR: Final = 55
+
+    def test_immutable_type_in_constant(self):
+        with self.assertRaises(AssertionError):
+            class Dog(Constant):
+                OOF: Final = [1, 2, 3]
+                BAR: Final = 55
+
+    def test_immutable_type_in_constant_when_allowed(self):
+        class Dog(MixedConstant):
+            OOF: Final = [1, 2, 3]
+            BAR: Final = 55

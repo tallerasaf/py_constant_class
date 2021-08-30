@@ -24,3 +24,23 @@ class LetterCaseMatch:
     PASCAL: Final[Callable[[str], bool]] = text_match(regex=LetterCaseRegex.PASCAL)
     CAMEL: Final[Callable[[str], bool]] = text_match(regex=LetterCaseRegex.CAMEL)
     MIXED: Final[Callable[[str], bool]] = lambda text: True
+
+
+"""
+--> Python Cases
+screaming_snake_case -> LONG_FUNCTION_NAME -> for Constants.
+snake_case -> long_function_name -> Variable, Function, Method, Module, Package names.
+pascal_case -> LongFunctionName -> Class names.
+camel_case -> longFunctionName.
+all_upper_case -> LONGFUNCTIONNAME.
+all_lower_case -> longfunctionname.
+kebab_case -> long-function-name.
+screaming_kebab_case -> LONG-FUNCTION-NAME.
+dot_case -> long.function.name.
+screaming_dot_case -> LONG.FUNCTION.NAME.
+mixed_case -> LonG.FUNC_TIO-N.NAmE.
+
+https://plugins.jetbrains.com/plugin/2162-string-manipulation
+https://realpython.com/python-pep8/#naming-styles
+https://www.python.org/dev/peps/pep-0008/#id36
+"""

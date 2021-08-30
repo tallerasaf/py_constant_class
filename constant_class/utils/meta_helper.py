@@ -5,6 +5,7 @@ from unittest.mock import MagicMock, PropertyMock
 from .mock_util import is_mock_the_caller
 
 DUNDER_SCORE = '__'
+IMMUTABLE_BUILT_IN_TYPES = (int, float, bool, str, tuple, frozenset)
 
 
 def get_constant_members(cls_name: str, cls_dict: Dict[str, Any], cls_object: object) -> Dict[str, Any]:
@@ -35,6 +36,10 @@ def validate_member(cls_name: str, cls_object: object, member_name: str, member_
     # noinspection PyUnresolvedReferences
     if cls_object.__strict_final__:
         assert is_member_origin_type_final(cls_object, member_name), 'Constant member origin type must be Final.'
+
+    # noinspection PyUnresolvedReferences
+    if cls_object.__strict_immutable__:
+        assert isinstance(member_value, IMMUTABLE_BUILT_IN_TYPES), 'Constant member must be immutable built-in type.'
 
 
 def should_skip_member(member_name: str, member_value: object) -> bool:
